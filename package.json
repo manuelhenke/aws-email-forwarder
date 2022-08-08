@@ -1,0 +1,36 @@
+{
+  "name": "aws-email-forwarder",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "license": "MIT",
+  "author": "Manuel Henke",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "lint": "yarn lint:js && yarn lint:prettier",
+    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+    "lint:prettier": "prettier --check .",
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
+    "prepare": "husky install",
+    "test": "echo \"No test specified\""
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/preset-env": "^7.18.10",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "babel-jest": "^28.1.3",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-sonarjs": "^0.14.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1189.0"
+  }
+}
