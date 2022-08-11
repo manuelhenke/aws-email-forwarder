@@ -1493,10 +1493,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@^2.1189.0:
-  version "2.1189.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1189.0.tgz#8dd6b48dd7896642af8e2f86e026932a28e380d5"
-  integrity sha512-EqluXSo8XAR086nF9UAtPYwUm82ZIRqg8OmHBRQyftcrD1Z0pqMmiuvacXoEAJ/4UU8KKafbpYarxx8rH/pZjQ==
+aws-sdk@^2.1192.0:
+  version "2.1192.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1192.0.tgz#13fe38ec8dae3232f17d52b370e69daa9c7a0e9c"
+  integrity sha512-6uzrlG1Ow3qcOnL0+et+DBTGhYgJzgNydVvos1Eg01vPc/ZhxR7roZ3epZQcPmOR0thQuzzckTq7FBO6wzZA2w==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -2045,10 +2045,10 @@ eslint-plugin-import@^2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-sonarjs@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.14.0.tgz#112d159ba7516a2a69bb1a6d6cab782e23bca259"
-  integrity sha512-0X0q3fB8ghppms19cR2oIK2ajoFp7DEy3AVGDqO7WX02r1aWOzkrHa+veatGZw+R7amgBvfcF0qHCG66p9Zoag==
+eslint-plugin-sonarjs@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.15.0.tgz#f9c904f143f4e2336f2923be08399b32b5bd2781"
+  integrity sha512-LuxHdAe6VqSbi1phsUvNjbmXLuvlobmryQJJNyQYbdubCfz6K8tmgoqNiJPnz0pP2AbYDbtuPm0ajOMgMrC+dQ==
 
 eslint-scope@^5.1.1:
   version "5.1.1"
