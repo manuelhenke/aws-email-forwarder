@@ -123,4 +123,4 @@ Resources:
           - !Ref ProxyDomain
         ScanEnabled: true
         TlsPolicy: OPTIONAL
-      RuleSetName: !If [CreateReceiptRuleSet, !Ref ReceiptRuleSet, !Ref SESRuleSetARN]
+      RuleSetName: !If [CreateReceiptRuleSet, !Ref SESReceiptRuleSet, !Ref SESRuleSetARN]
