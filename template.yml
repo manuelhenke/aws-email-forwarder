@@ -57,7 +57,7 @@ Resources:
       Policies:
         # Give Lambda basic execution Permission
         - AWSLambdaBasicExecutionRole
-        - SESEmailForwardRole
+        - !Ref SESEmailForwardRole
 
   SNSEmailReceiveTopic:
     Type: AWS::SNS::Topic
