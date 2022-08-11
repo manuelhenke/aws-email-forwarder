@@ -45,6 +45,8 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Build 🛠
+        env:
+          NODE_ENV: "production"
         run: sam build
 
       - name: Deploy 📨
