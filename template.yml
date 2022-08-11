@@ -114,9 +114,9 @@ Resources:
     Properties:
       Rule:
         Actions:
-          SNSAction:
-            TopicArn: !Ref SNSEmailReceiveTopic
-            Encoding: UTF-8
+          - SNSAction:
+              TopicArn: !Ref SNSEmailReceiveTopic
+              Encoding: UTF-8
         Enabled: true
         Name: forward-incoming-mail
         Recipients:
