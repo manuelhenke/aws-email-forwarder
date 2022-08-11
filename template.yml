@@ -57,6 +57,7 @@ Resources:
       Policies:
         # Give Lambda basic execution Permission
         - AWSLambdaBasicExecutionRole
+        - SESEmailForwardRole
 
   SNSEmailReceiveTopic:
     Type: AWS::SNS::Topic
@@ -83,12 +84,6 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
-                Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:PutLogEvents
-                Resource: arn:aws:logs:*:*:*
               - Effect: Allow
                 Action:
                   - ses:SendEmail
