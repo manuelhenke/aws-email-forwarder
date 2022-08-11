@@ -96,3 +96,6 @@ playwright-report/
 
 # Ignore symbolic link folders
 ln-*
+
+# AWS Sam build folder
+.aws-sam/

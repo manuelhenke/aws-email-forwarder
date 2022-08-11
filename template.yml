@@ -1,0 +1,126 @@
+# This is the SAM template that represents the architecture of your serverless application
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
+
+# The AWSTemplateFormatVersion identifies the capabilities of the template
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Application to forward SES email to another address
+
+# Transform section specifies one or more macros that AWS CloudFormation uses to process your template
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
+Transform:
+  - AWS::Serverless-2016-10-31
+
+# Resources declares the AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Tracing: Active
+  Api:
+    TracingEnabled: True
+
+Parameters:
+  ProxyDomain:
+    Description: Domain for proxying. Receiving all Emails and sending them to "ForwardToAddress"
+    Type: String
+  ForwardToAddress:
+    Description: Email forwarded to address
+    Type: String
+  SESRuleSetARN:
+    Description: ARN of a SES Rule Set. The template will create a new one if not provided
+    Type: String
+    Default: ''
+
+Conditions:
+  CreateReceiptRuleSet: !Equals [!Ref SESRuleSetARN, '']
+
+Resources:
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: process-incoming-email.js
+  ProcessIncomingEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/process-incoming-email.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 30
+      Description: A Lambda function that forwards email from a SNS Topic to a given Email-Address.
+      Environment:
+        Variables:
+          proxyDomain: !Ref ProxyDomain
+          forwardTo: !Ref ForwardToAddress
+      Policies:
+        # Give Lambda basic execution Permission
+        - AWSLambdaBasicExecutionRole
+
+  SNSEmailReceiveTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint: !GetAtt ProcessIncomingEmailFunction.Arn
+          Protocol: lambda
+
+  SESEmailForwardRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: '/'
+      Policies:
+        - PolicyName: SESEmailForward
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - ses:SendEmail
+                  - ses:SendRawEmail
+                Resource: '*'
+
+  SNSLambdaInvokeRole:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      Principal: sns.amazonaws.com
+      SourceArn: !Ref SNSEmailReceiveTopic
+      FunctionName: !GetAtt ProcessIncomingEmailFunction.Arn
+
+  SESReceiptRuleSet:
+    Type: AWS::SES::ReceiptRuleSet
+    Condition: CreateReceiptRuleSet
+    Properties:
+      RuleSetName: receiving-rule-set
+
+  SESReceiptRule:
+    Type: AWS::SES::ReceiptRule
+    Properties:
+      Rule:
+        Actions:
+          - SNSAction:
+            TopicArn: !Ref SNSEmailReceiveTopic
+            Encoding: UTF-8
+        Enabled: true
+        Name: forward-incoming-mail
+        Recipients:
+          - !Ref ProxyDomain
+        ScanEnabled: true
+        TlsPolicy: OPTIONAL
+      RuleSetName: !If [CreateReceiptRuleSet, !Ref ReceiptRuleSet, !Ref SESRuleSetARN]

@@ -1,0 +1,52 @@
+name: "Continuous Deployment"
+
+on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    branches: ["main"]
+    types:
+      - completed
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-west-1
+  PROXY_DOMAIN: henkebyte.com
+  FORWARD_TO_ADDRESS: manuel.henke@yahoo.de
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup python env 🏗
+        uses: actions/setup-python@v2
+
+      - name: Setup sam env 🏗
+        uses: aws-actions/setup-sam@v1
+
+      - name: Configure AWS credentials ⚙️
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Build 🛠
+        run: sam build --use-container
+
+      - name: Deploy 📨
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides "ProxyDomain=${{ env.PROXY_DOMAIN }} ForwardToAddress=${{ env.FORWARD_TO_ADDRESS }}"
+

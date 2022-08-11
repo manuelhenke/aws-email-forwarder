@@ -1,0 +1,9 @@
+version = 0.1
+[default.global.parameters]
+stack_name = "EmailForwarder"
+region = "eu-west-1"
+[default.deploy.parameters]
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-ke64yeofgukh"
+s3_prefix = "EmailForwarder"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

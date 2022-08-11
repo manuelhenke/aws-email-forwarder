@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm install -g n
+      - npm update -g npm
+      - npm install -g yarn
+      # Install all dependencies (including dependencies for running tests)
+      - yarn install --frozen-lockfile
+  pre_build:
+    commands:
+      # Discover and run unit tests
+      - yarn test
+      # Remove all unit tests to reduce the size of the package that will be ultimately uploaded to Lambda
+      - rm -rf ./test
+      # Remove all dependencies not needed for the Lambda deployment package (the packages from devDependencies in package.json)
+      - yarn install --production --ignore-scripts --prefer-offline
+  build:
+    commands:
+      # Use AWS SAM to package the application by using AWS CloudFormation
+      - aws cloudformation package --template template.yaml --s3-bucket $S3_BUCKET --output-template template-export.yml
+artifacts:
+  type: zip
+  files:
+    - template-export.yml

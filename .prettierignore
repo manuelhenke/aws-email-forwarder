@@ -108,3 +108,6 @@ ln-*
 static/admin/
 content/
 .github/
+
+# AWS Sam build folder
+.aws-sam/
