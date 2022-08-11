@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { SES } = require('aws-sdk');
 
-const { forwardTo } = process.env;
+const { proxyDomain, forwardTo } = process.env;
 
 /**
  * @param {CommonHeaders} param0
@@ -153,7 +153,7 @@ exports.handler = (event, context) => {
 
   Promise.all(
     recipients
-      .filter((dest) => dest.includes('@henkebyte.com'))
+      .filter((dest) => dest.endsWith(proxyDomain))
       .map((dest) => {
         const forwardHeaders = headersToString({
           From: dest,
