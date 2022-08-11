@@ -114,7 +114,7 @@ Resources:
     Properties:
       Rule:
         Actions:
-          - SNSAction:
+          SNSAction:
             TopicArn: !Ref SNSEmailReceiveTopic
             Encoding: UTF-8
         Enabled: true
