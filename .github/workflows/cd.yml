@@ -45,7 +45,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Build 🛠
-        run: sam build --use-container
+        run: sam build
 
       - name: Deploy 📨
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides "ProxyDomain=${{ env.PROXY_DOMAIN }} ForwardToAddress=${{ env.FORWARD_TO_ADDRESS }}"
