@@ -7,3 +7,7 @@ s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-ke64yeofgukh"
 s3_prefix = "EmailForwarder"
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+[default.build.parameters]
+beta_features = true
+[default.sync.parameters]
+beta_features = true

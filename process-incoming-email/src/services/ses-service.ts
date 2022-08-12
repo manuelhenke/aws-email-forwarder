@@ -1,12 +1,7 @@
-/* eslint-disable no-console */
-const { SES } = require('aws-sdk');
+import { SES } from 'aws-sdk';
 
-/**
- * @param {SES.RawMessageData} email
- * @returns {Promise<void>}
- */
-exports.sendMail = (email) =>
-  new Promise((resolve, reject) => {
+export function sendMail(email: SES.RawMessage['Data']): Promise<string> {
+  return new Promise((resolve, reject) => {
     new SES().sendRawEmail(
       {
         RawMessage: { Data: email },
@@ -20,3 +15,4 @@ exports.sendMail = (email) =>
       }
     );
   });
+}

@@ -17,6 +17,11 @@ Transform:
 Globals:
   Function:
     Tracing: Active
+    MemorySize: 128
+    Timeout: 30
+    Runtime: nodejs16.x
+    Architectures:
+      - x86_64
   Api:
     TracingEnabled: True
 
@@ -43,13 +48,11 @@ Resources:
   ProcessIncomingEmailFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/process-incoming-email.handler
-      Runtime: nodejs16.x
-      Architectures:
-        - x86_64
-      MemorySize: 128
-      Timeout: 30
       Description: A Lambda function that forwards email from a SNS Topic to a given Email-Address.
+      CodeUri: process-incoming-email/
+      Handler: app.handler
+      Layers:
+        - !Ref ProcessIncomingEmailLayer
       Environment:
         Variables:
           proxyDomain: !Ref ProxyDomain
@@ -64,6 +67,30 @@ Resources:
                 - ses:SendEmail
                 - ses:SendRawEmail
               Resource: '*'
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: 'es2020'
+        Sourcemap: true
+        External:
+          - aws-sdk
+          - envalid
+        EntryPoints:
+          - app.ts
+
+  ProcessIncomingEmailLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: aws-email-forwarder-dependencies
+      Description: Dependencies for AWS Email Forwarder
+      ContentUri: dependencies/
+      CompatibleArchitectures:
+        - x86_64
+      CompatibleRuntimes:
+        - nodejs16.x
+      LicenseInfo: 'MIT'
+      RetentionPolicy: Retain
 
   SNSEmailReceiveTopic:
     Type: AWS::SNS::Topic
@@ -101,3 +128,8 @@ Resources:
         ScanEnabled: true
         TlsPolicy: Optional
       RuleSetName: !If [CreateReceiptRuleSet, !Ref SESReceiptRuleSet, !Ref SESRuleSetARN]
+
+Outputs:
+  ProcessIncomingEmailFunction:
+    Description: 'Process Incoming Email Lambda Function ARN'
+    Value: !GetAtt ProcessIncomingEmailFunction.Arn

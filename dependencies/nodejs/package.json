@@ -1,0 +1,15 @@
+{
+  "name": "aws-email-forwarder-dependencies",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Manuel Henke",
+  "private": true,
+  "dependencies": {
+    "envalid": "^7.3.1"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  }
+}
