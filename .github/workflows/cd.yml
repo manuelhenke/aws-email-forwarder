@@ -37,10 +37,10 @@ jobs:
           node-version-file: ".nvmrc"
 
       - name: Setup python env 🏗
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
 
       - name: Setup sam env 🏗
-        uses: aws-actions/setup-sam@v1
+        uses: aws-actions/setup-sam@v2
 
       - name: Configure AWS credentials ⚙️
         uses: aws-actions/configure-aws-credentials@v1
