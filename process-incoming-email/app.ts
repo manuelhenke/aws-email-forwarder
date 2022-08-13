@@ -1,15 +1,15 @@
 import { SNSEvent, SESMessage, Handler } from 'aws-lambda';
-import { cleanEnv, str } from 'envalid';
+import { cleanEnv, email, host } from 'envalid';
 import { ForwardHeaders } from './src/interfaces';
 import { sendMail } from './src/services/ses-service';
 import { getHeaders, addHeaderField, headersToString } from './src/utils';
 
-export const handler: Handler<SNSEvent, void> = async (event) => {
-  const { proxyDomain, forwardTo } = cleanEnv(process.env, {
-    proxyDomain: str(),
-    forwardTo: str(),
-  });
+const { PROXY_DOMAIN, FORWARD_TO } = cleanEnv(process.env, {
+  PROXY_DOMAIN: host(),
+  FORWARD_TO: email(),
+});
 
+export const handler: Handler<SNSEvent, void> = async (event) => {
   console.log('Incoming Request', event.Records[0].Sns.Message);
   const msgInfo = JSON.parse(event.Records[0].Sns.Message) as SESMessage & { content: string };
 
@@ -25,7 +25,7 @@ export const handler: Handler<SNSEvent, void> = async (event) => {
     return;
   }
 
-  let headers: ForwardHeaders = getHeaders(forwardTo, commonHeaders);
+  let headers: ForwardHeaders = getHeaders(FORWARD_TO, commonHeaders);
 
   let forwardBody = 'Empty email';
   if (content) {
@@ -60,7 +60,7 @@ export const handler: Handler<SNSEvent, void> = async (event) => {
   try {
     await Promise.all(
       recipients
-        .filter((dest) => dest.endsWith(proxyDomain))
+        .filter((dest) => dest.endsWith(PROXY_DOMAIN))
         .map((dest) => {
           const forwardHeaders = headersToString({
             From: dest,

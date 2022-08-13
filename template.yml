@@ -55,8 +55,8 @@ Resources:
         - !Ref ProcessIncomingEmailLayer
       Environment:
         Variables:
-          proxyDomain: !Ref ProxyDomain
-          forwardTo: !Ref ForwardToAddress
+          PROXY_DOMAIN: !Ref ProxyDomain
+          FORWARD_TO: !Ref ForwardToAddress
       Policies:
         # Give Lambda basic execution Permission
         - AWSLambdaBasicExecutionRole
