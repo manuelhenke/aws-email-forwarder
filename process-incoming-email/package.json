@@ -5,7 +5,7 @@
   "author": "Manuel Henke",
   "main": "app.js",
   "dependencies": {
-    "aws-sdk": "^2.1194.0",
+    "aws-sdk": "^2.1195.0",
     "envalid": "^7.3.1"
   },
   "scripts": {
