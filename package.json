@@ -2,9 +2,13 @@
   "name": "aws-email-forwarder",
   "version": "0.0.1",
   "private": true,
-  "description": "",
+  "description": "Lambda function to forward incoming mails from a SNS Topic to another email address. ",
   "license": "MIT",
-  "author": "Manuel Henke",
+  "author": {
+    "name": "Manuel Henke",
+    "email": "contact@henkebyte.com",
+    "url": "https://henkebyte.com/"
+  },
   "scripts": {
     "lint": "eslint --ext \".ts\" --ignore-path .gitignore .",
     "lintfix": "yarn lint --fix",

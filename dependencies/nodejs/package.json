@@ -2,7 +2,11 @@
   "name": "aws-email-forwarder-dependencies",
   "version": "0.0.1",
   "license": "MIT",
-  "author": "Manuel Henke",
+  "author": {
+    "name": "Manuel Henke",
+    "email": "contact@henkebyte.com",
+    "url": "https://henkebyte.com/"
+  },
   "private": true,
   "dependencies": {
     "envalid": "^7.3.1"

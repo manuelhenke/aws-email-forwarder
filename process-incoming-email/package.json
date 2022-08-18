@@ -2,7 +2,11 @@
   "name": "process-incoming-email-handler",
   "version": "0.0.1",
   "license": "MIT",
-  "author": "Manuel Henke",
+  "author": {
+    "name": "Manuel Henke",
+    "email": "contact@henkebyte.com",
+    "url": "https://henkebyte.com/"
+  },
   "main": "app.js",
   "dependencies": {
     "aws-sdk": "^2.1196.0",
