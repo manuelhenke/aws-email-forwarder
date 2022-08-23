@@ -6,8 +6,8 @@ export function sendMail(email: SES.RawMessage['Data']): Promise<string> {
       {
         RawMessage: { Data: email },
       },
-      (err, data) => {
-        if (err) reject(err);
+      (error, data) => {
+        if (error) reject(error);
         else {
           console.log(`Sent with MessageId: ${data.MessageId}`);
           resolve(data.MessageId);

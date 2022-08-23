@@ -18,13 +18,17 @@
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:sonarjs/recommended",
+    "plugin:unicorn/recommended",
     "plugin:prettier/recommended"
   ],
+  "plugins": ["no-only-tests", "no-secrets"],
   "rules": {
     "no-console": "off",
     "import/no-extraneous-dependencies": ["error", { "packageDir": ["./process-incoming-email"] }],
-    "import/prefer-default-export": "off"
-  },
-  "plugins": ["sonarjs"],
-  "settings": {}
+    "import/prefer-default-export": "off",
+    "no-only-tests/no-only-tests": "error",
+    "no-secrets/no-secrets": "error",
+    "unicorn/no-array-for-each": "off"
+  }
 }

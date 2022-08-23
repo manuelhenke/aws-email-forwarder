@@ -2,7 +2,15 @@
   "name": "aws-email-forwarder",
   "version": "0.0.1",
   "private": true,
-  "description": "Lambda function to forward incoming mails from a SNS Topic to another email address. ",
+  "description": "Lambda function to forward incoming mails from a SNS Topic to another email address.",
+  "homepage": "https://github.com/manuelhenke/aws-email-forwarder",
+  "bugs": {
+    "url": "https://github.com/manuelhenke/aws-email-forwarder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelhenke/aws-email-forwarder.git"
+  },
   "license": "MIT",
   "author": {
     "name": "Manuel Henke",
@@ -10,8 +18,10 @@
     "url": "https://henkebyte.com/"
   },
   "scripts": {
-    "lint": "eslint --ext \".ts\" --ignore-path .gitignore .",
-    "lintfix": "yarn lint --fix",
+    "lint": "yarn lint:js && yarn lint:prettier",
+    "lint:js": "eslint --ext \".ts\" --ignore-path .gitignore .",
+    "lint:prettier": "prettier --check --ignore-path .gitignore .",
+    "lintfix": "yarn lint:js --fix && prettier --write --list-different . ",
     "prepare": "husky install",
     "test": "echo \"No test specified\"",
     "local-invoke": "sam build && sam local invoke -e events/event.json --parameter-overrides \"ProxyDomain=henkebyte.com ForwardToAddress=manuel.henke@yahoo.de\""
@@ -27,8 +37,11 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-only-tests": "^3.0.0",
+    "eslint-plugin-no-secrets": "^0.8.9",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.15.0",
+    "eslint-plugin-unicorn": "^43.0.2",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
     "typescript": "^4.5.5"

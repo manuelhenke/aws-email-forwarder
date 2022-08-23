@@ -1,9 +1,9 @@
-name: "Continuous Deployment"
+name: 'Continuous Deployment'
 
 on:
   workflow_run:
-    workflows: ["Continuous Integration"]
-    branches: ["main"]
+    workflows: ['Continuous Integration']
+    branches: ['main']
     types:
       - completed
 
@@ -34,7 +34,7 @@ jobs:
       - name: Setup node env 🏗
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: '.nvmrc'
 
       - name: Setup python env 🏗
         uses: actions/setup-python@v4
@@ -70,4 +70,3 @@ jobs:
 
       - name: Deploy 📨
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides "ProxyDomain=${{ env.PROXY_DOMAIN }} ForwardToAddress=${{ env.FORWARD_TO_ADDRESS }}"
-

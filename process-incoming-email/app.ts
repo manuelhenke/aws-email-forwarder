@@ -11,13 +11,13 @@ const { PROXY_DOMAIN, FORWARD_TO } = cleanEnv(process.env, {
 
 export const handler: Handler<SNSEvent, void> = async (event) => {
   console.log('Incoming Request', event.Records[0].Sns.Message);
-  const msgInfo = JSON.parse(event.Records[0].Sns.Message) as SESMessage & { content: string };
+  const messageInfo = JSON.parse(event.Records[0].Sns.Message) as SESMessage & { content: string };
 
   const {
     receipt: { recipients, spamVerdict, virusVerdict },
     mail: { commonHeaders },
     content,
-  } = msgInfo;
+  } = messageInfo;
 
   // don't process spam messages
   if (spamVerdict.status === 'FAIL' || virusVerdict.status === 'FAIL') {
@@ -29,25 +29,25 @@ export const handler: Handler<SNSEvent, void> = async (event) => {
 
   let forwardBody = 'Empty email';
   if (content) {
-    let res;
-    res = content.match(/Content-Type:.+\s*boundary.*/);
-    if (res) {
-      headers = addHeaderField(headers, res[0]);
+    let matches;
+    matches = content.match(/Content-Type:.+\s*boundary.*/);
+    if (matches) {
+      headers = addHeaderField(headers, matches[0]);
     } else {
-      res = content.match(/^Content-Type:(.*)/m);
-      if (res) {
-        headers = addHeaderField(headers, res[0]);
+      matches = content.match(/^Content-Type:(.*)/m);
+      if (matches) {
+        headers = addHeaderField(headers, matches[0]);
       }
     }
 
-    res = content.match(/^Content-Transfer-Encoding:(.*)/m);
-    if (res) {
-      headers = addHeaderField(headers, res[0]);
+    matches = content.match(/^Content-Transfer-Encoding:(.*)/m);
+    if (matches) {
+      headers = addHeaderField(headers, matches[0]);
     }
 
-    res = content.match(/^MIME-Version:(.*)/m);
-    if (res) {
-      headers = addHeaderField(headers, res[0]);
+    matches = content.match(/^MIME-Version:(.*)/m);
+    if (matches) {
+      headers = addHeaderField(headers, matches[0]);
     }
 
     const splitEmail = content.split('\r\n\r\n');
@@ -60,10 +60,10 @@ export const handler: Handler<SNSEvent, void> = async (event) => {
   try {
     await Promise.all(
       recipients
-        .filter((dest) => dest.endsWith(PROXY_DOMAIN))
-        .map((dest) => {
+        .filter((destination) => destination.endsWith(PROXY_DOMAIN))
+        .map((destination) => {
           const forwardHeaders = headersToString({
-            From: dest,
+            From: destination,
             ...headers,
           });
           const forwardEmail = `${forwardHeaders}\r\n\r\n${forwardBody}`;

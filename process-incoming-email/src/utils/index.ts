@@ -16,11 +16,11 @@ export function getHeaders(
     Subject: `Fwd (${returnPath}): ${subject ?? '<Empty Subject>'}`,
   };
 
-  if (cc.length) {
+  if (cc.length > 0) {
     headers['X-Original-Cc'] = cc.join(mailDelimiter);
   }
 
-  if (bcc.length) {
+  if (bcc.length > 0) {
     headers['X-Original-Bcc'] = bcc.join(mailDelimiter);
   }
 
