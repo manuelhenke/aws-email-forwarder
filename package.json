@@ -18,6 +18,7 @@
     "url": "https://henkebyte.com/"
   },
   "scripts": {
+    "build": "sam build",
     "lint": "yarn lint:js && yarn lint:prettier",
     "lint:js": "eslint --ext \".ts\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check --ignore-path .gitignore .",
