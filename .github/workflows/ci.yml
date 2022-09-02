@@ -51,11 +51,11 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
 
-      - name: Run tests 👀
-        run: yarn test --coverage
-
       - name: Install dependencies 👨🏻‍💻
         run: yarn install --frozen-lockfile --immutable
+
+      - name: Run tests 👀
+        run: yarn test --coverage
 
       - name: Archive code coverage report 💾
         uses: actions/upload-artifact@v3
