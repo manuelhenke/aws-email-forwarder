@@ -9,7 +9,7 @@
   },
   "main": "app.js",
   "dependencies": {
-    "aws-sdk": "^2.1210.0",
+    "aws-sdk": "^2.1211.0",
     "envalid": "^7.3.1"
   },
   "scripts": {
