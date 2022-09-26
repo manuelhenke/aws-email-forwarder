@@ -17,7 +17,7 @@
     "test": "echo \"No test specified\""
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.104",
+    "@types/aws-lambda": "^8.10.106",
     "@types/node": "^18.7.21",
     "esbuild": "^0.15.9",
     "ts-node": "^10.4.0",
