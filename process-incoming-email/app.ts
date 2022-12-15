@@ -54,7 +54,7 @@ export const handler: Handler<SNSEvent, void> = async (event) => {
     // remove stale header
     splitEmail.shift();
 
-    forwardBody = splitEmail.join('\r\n\r\n');
+    forwardBody = splitEmail.join('\r\n\r\n').replace(/"/g, '\\"');
   }
 
   try {
