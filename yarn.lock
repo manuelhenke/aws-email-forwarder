@@ -418,10 +418,10 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
 
-"@types/aws-lambda@^8.10.111":
-  version "8.10.111"
-  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.111.tgz#9107c405f3011a5c423b5ac93fbf279439558571"
-  integrity sha512-8HR9UjIKmoemEzE2BviVtFkeenxfbizSu8raFjnT2VXxguZZ2JTlNww7INOH7IA0J/zRa3TjOftkYq6hVNkxDA==
+"@types/aws-lambda@^8.10.119":
+  version "8.10.119"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.119.tgz#aaf010a9c892b3e29a290e5c49bfe8bcec82c455"
+  integrity sha512-Vqm22aZrCvCd6I5g1SvpW151jfqwTzEZ7XJ3yZ6xaZG31nUEOEyzzVImjRcsN8Wi/QyPxId/x8GTtgIbsy8kEw==
 
 "@types/json-schema@^7.0.9":
   version "7.0.11"
